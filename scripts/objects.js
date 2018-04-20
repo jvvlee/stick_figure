@@ -64,3 +64,31 @@ class Paddle {
     )
   }
 }
+
+class Brick {
+  constructor(x, y, canvas, allBricks) {
+    this.x = x;
+    this.y = y;
+    this.allBricks = allBricks;
+    this.canvas = canvas;
+
+    this.length = 30;
+    this.height = 15;
+
+    this.allBricks.push(this);
+  }
+
+  die() {
+
+  }
+
+  draw(context) {
+    context.fillStyle = "green";
+    context.fillRect(
+      this.x - (this.length / 2),
+      this.y - (this.height / 2),
+      this.length,
+      this.height
+    )
+  }
+}
