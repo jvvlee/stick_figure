@@ -1,34 +1,32 @@
 // import { Paddle, Ball } from './objects.js';
 // import { Painter, Brain } from './utility.js';
-var allBricks = []
 
 const paddle = new Paddle(canvas);
 const ball = new Ball(canvas)
-const painter = new Painter(canvas, context, paddle, ball, allBricks);
-const smash = new BallCollisionDetector(paddle, ball, canvas);
+const batman = new BrickManager();
+const painter = new Painter(canvas, context, paddle, ball, batman);
+const smash = new BallCollisionDetector(paddle, ball, canvas, batman);
 
 function loop () {
   ball.move();
-  painter.draw();
   smash.step();
+  painter.draw();
 
   window.requestAnimationFrame(loop);
 }
 
-window.onkeydown = function (event) {
-  if (event.code === "ArrowLeft") {
-    paddle.move(-5);
-  } else if (event.code === "ArrowRight") {
-    paddle.move(5);
-  }
-}
+canvas.addEventListener("mousemove",event => {
+  const mousePositionX = event.clientX;
 
+  paddle.setPosition(mousePositionX);
+})
 
-
-for (i = 0; i < 10; i++) {
+for (i = 0; i < 100; i++) {
   const xBrick = Math.random() * canvas.width;
   const yBrick = Math.random() * canvas.height;
-  new Brick(xBrick, yBrick, canvas, allBricks);
+  const brick = new Brick(xBrick, yBrick, canvas);
+
+  batman.addBrick(brick);
 }
 
 

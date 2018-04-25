@@ -7,8 +7,8 @@ class Ball {
     this.radius = 10;
     // this.angle = Math.PI / 3;
     // this.speed = 1;
-    this.dx = 0.5;
-    this.dy = 0.5;
+    this.dx = 10.5;
+    this.dy = 10.5;
   }
 
   move() {
@@ -32,6 +32,15 @@ class Ball {
   verticalBounce() {
     this.dx *= -1
   }
+
+  collisionCoordinates() {
+    return {
+      x1: this.x - this.radius,
+      y1: this.y - this.radius,
+      x2: this.x + this.radius,
+      y2: this.y + this.radius,
+    }
+  }
 }
 
 class Paddle {
@@ -43,15 +52,8 @@ class Paddle {
     this.paddleHeight = 10;
   }
 
-  move(magnitude) {
-    const leftEdge = 0 + (this.paddleLength / 2);
-    const rightEdge = canvas.width - (this.paddleLength / 2)
-
-    if (leftEdge >= this.x + magnitude || this.x >= rightEdge + magnitude) {
-      return
-    }
-
-    this.x += magnitude;
+  setPosition(mousePositionX) {
+    this.x = mousePositionX;
   }
 
   draw(context) {
@@ -62,6 +64,15 @@ class Paddle {
       this.paddleLength,
       this.paddleHeight
     )
+  }
+
+  collisionCoordinates() {
+    return {
+      x1: this.x - (this.paddleLength / 2),
+      y1: this.y - (this.paddleHeight / 2),
+      x2: this.x + (this.paddleLength / 2),
+      y2: this.y + (this.paddleHeight / 2),
+    }
   }
 }
 
@@ -74,14 +85,8 @@ class Brick {
 
     this.length = 30;
     this.height = 15;
-
-    this.allBricks.push(this);
   }
-
-  die() {
-
-  }
-
+  
   draw(context) {
     context.fillStyle = "green";
     context.fillRect(
@@ -90,5 +95,14 @@ class Brick {
       this.length,
       this.height
     )
+  }
+
+  collisionCoordinates() {
+    return {
+      x1: this.x - (this.length / 2),
+      y1: this.y - (this.height / 2),
+      x2: this.x + (this.length / 2),
+      y2: this.y + (this.height / 2),
+    }
   }
 }
