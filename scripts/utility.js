@@ -43,6 +43,7 @@ class BallCollisionDetector {
 
     if (this.canvas.height < futureYPos) {
       this.ball.staging = true
+      this.brickManager.reconstitute();
     }
   }
 
@@ -127,13 +128,12 @@ class BrickManager {
     this.id = 0
     this.rows = 20
     this.columns = 3
+    this.snapshot = {}
+  }
 
-    this.positionMatrix = []
-
-    const _that = this
-
-    for (var i = 0; i < _that.rows; i++) { // rows
-      _that.positionMatrix[i] = new Array(_that.columns); // columns
+  takeSnapshot() {
+    this.snapshot = {
+      ...this.allBricks
     }
   }
 
@@ -151,5 +151,11 @@ class BrickManager {
   get() {
     //todo not browser compatible
     return Object.values(this.allBricks);
+  }
+
+  reconstitute() {
+    this.allBricks = {
+      ...this.snapshot
+    }
   }
 }

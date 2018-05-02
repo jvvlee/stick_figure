@@ -37,5 +37,6 @@ for (var y = 1; y < batman.rows + 1; y++) {
   }
 }
 
+batman.takeSnapshot();
 
 loop();
