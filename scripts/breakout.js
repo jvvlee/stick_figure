@@ -8,7 +8,7 @@ const painter = new Painter(canvas, context, paddle, ball, batman);
 const smash = new BallCollisionDetector(paddle, ball, canvas, batman);
 
 function loop () {
-  ball.move();
+  ball.move(paddle);
   smash.step();
   painter.draw();
 
@@ -21,12 +21,20 @@ canvas.addEventListener("mousemove",event => {
   paddle.setPosition(mousePositionX);
 })
 
-for (i = 0; i < 100; i++) {
-  const xBrick = Math.random() * canvas.width;
-  const yBrick = Math.random() * canvas.height;
-  const brick = new Brick(xBrick, yBrick, canvas);
+canvas.addEventListener("click", event => {
+  ball.launch();
+})
 
-  batman.addBrick(brick);
+for (var y = 1; y < batman.rows + 1; y++) {
+  for (var x = 1; x < batman.columns + 1; x++) {
+
+    const xBrick = x * canvas.width * BRICK_WIDTH;
+    const yBrick = y * canvas.height * BRICK_HEIGHT;
+
+    const brick = new Brick(xBrick, yBrick, canvas);
+
+    batman.addBrick(brick);
+  }
 }
 
 

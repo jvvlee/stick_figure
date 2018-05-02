@@ -9,13 +9,30 @@ class Ball {
     // this.speed = 1;
     this.dx = 10.5;
     this.dy = 10.5;
+    this.staging = true;
   }
 
-  move() {
-    // this.x += this.speed * Math.cos(this.angle);
-    // this.y += this.speed * Math.sin(this.angle);
-    this.x += this.dx
-    this.y += this.dy
+  move(paddle) {
+    if (this.staging == true ) {
+      this.follow(paddle);
+    } else {
+      this.x += this.dx
+      this.y += this.dy
+    }
+  }
+
+  launch() {
+    this.staging = false;
+  }
+
+  follow(paddle) {
+    this.x = paddle.x;
+    this.y = paddle.y - 20;
+  }
+
+  unmove() {
+    this.x -= this.dx
+    this.y -= this.dy
   }
 
   draw(context) {
@@ -48,7 +65,7 @@ class Paddle {
     this.canvas = canvas;
     this.x = canvas.width / 2;
     this.y = canvas.height - 100;
-    this.paddleLength = 50;
+    this.paddleLength = 100;
     this.paddleHeight = 10;
   }
 
@@ -57,7 +74,7 @@ class Paddle {
   }
 
   draw(context) {
-    context.fillStyle = "white";
+    context.fillStyle = "#AAF0D1";
     context.fillRect(
       this.x - (this.paddleLength / 2),
       this.y - (this.paddleHeight / 2),
@@ -76,19 +93,28 @@ class Paddle {
   }
 }
 
+BRICK_WIDTH = 0.1
+BRICK_HEIGHT = 0.04
+
 class Brick {
   constructor(x, y, canvas, allBricks) {
     this.x = x;
     this.y = y;
+
+    this.row = null;
+    this.column = null;
+
     this.allBricks = allBricks;
     this.canvas = canvas;
 
-    this.length = 30;
-    this.height = 15;
+    this.length = (this.canvas.width)*BRICK_WIDTH;
+    this.height = (this.canvas.height)*BRICK_HEIGHT
+    this.color = RAINBOW[Math.floor(Math.random() * RAINBOW.length)];
   }
   
   draw(context) {
-    context.fillStyle = "green";
+    // context.fillStyle = RAINBOW[Math.floor(Math.random() * RAINBOW.length)];
+    context.fillStyle = this.color
     context.fillRect(
       this.x - (this.length / 2),
       this.y - (this.height / 2),
@@ -106,3 +132,9 @@ class Brick {
     }
   }
 }
+
+// const watermelon = [
+//   [1,1,'y'],
+//   [2,1,'y'],
+//   [2,2,'r'],
+// ]
