@@ -25,13 +25,19 @@ canvas.addEventListener("click", event => {
   ball.launch();
 })
 
-for (var y = 1; y < brickManager.rows + 1; y++) {
-  for (var x = 1; x < brickManager.columns + 1; x++) {
-    if (y>x) {
-      const brick = new Brick(x, y, canvas);
-      brickManager.addBrick(brick);
-    }
-  }
+// for (var row = 1; row < brickManager.rows + 1; row++) {
+//   for (var column = 1; column < brickManager.columns + 1; column++) {
+//     if (row>column) {
+//       const brick = new Brick(column, row, canvas);
+//       brickManager.addBrick(brick);
+//     }
+//   }
+// }
+
+const brickConfig = readUrlParam("bricks")
+// console.log(brickConfig)
+if (brickConfig) {
+  brickManager.reconstituteFromString(brickConfig, canvas);
 }
 
 brickManager.takeSnapshot();

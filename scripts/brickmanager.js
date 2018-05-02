@@ -3,7 +3,7 @@ class BrickManager {
     this.allBricks = {}
     this.id = 0
     this.rows = 20
-    this.columns = 3
+    this.columns = 9
     this.snapshot = {}
   }
 
@@ -29,6 +29,18 @@ class BrickManager {
     return Object.values(this.allBricks);
   }
 
+  reconstituteFromString(base64String, canvas) {
+    const jsonString = decodeURIComponent(atob(base64String));
+    const allBricksJson = JSON.parse(jsonString);
+
+    this.allBricks = {}
+
+    allBricksJson.forEach(brickObj => {
+      const brick = new Brick(brickObj.c, brickObj.r, canvas);
+      this.addBrick(brick);
+    })
+  }
+
   reconstitute() {
     this.allBricks = {
       ...this.snapshot
@@ -36,6 +48,10 @@ class BrickManager {
   }
 
   serialize() {
-    return JSON.stringify(this.allBricks);
+    const serializedBricks = Object.values(this.allBricks).map(b => 
+      b.serialize()
+    )
+
+    return encodeURIComponent(btoa(JSON.stringify(serializedBricks)));
   }
 }

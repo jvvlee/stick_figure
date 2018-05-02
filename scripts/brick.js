@@ -37,9 +37,9 @@ class Brick {
 
   serialize() {
     return JSON.stringify({
-      x: this.x,
-      y: this.y,
-      color: this.color
+      r: this.row,
+      c: this.column,
+      // color: this.color
     })
   }
 }
