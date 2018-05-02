@@ -26,12 +26,13 @@ const gradientConstructor = function (ctx, canvas) {
     const xHalf = this.canvas.width / 2;
     const yHalf = this.canvas.height / 2;
 
-    const wut = this.context.createRadialGradient(xHalf,yHalf,10, xHalf, yHalf, 500);
+    const gradient = this.context.createRadialGradient(xHalf,yHalf,10, xHalf, yHalf, 500);
+    const backgroundColor = readUrlParam('color') || "black";
 
-    wut.addColorStop(0, 'black')
-    wut.addColorStop(1.0, 'white')
+    gradient.addColorStop(0, backgroundColor);
+    gradient.addColorStop(1.0, 'white');
 
-    this.context.fillStyle = wut;
+    this.context.fillStyle = gradient;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
 }

@@ -2,14 +2,12 @@ BRICK_WIDTH = 0.1
 BRICK_HEIGHT = 0.04
 
 class Brick {
-  constructor(x, y, canvas, allBricks) {
-    this.x = x;
-    this.y = y;
+  constructor(column, row, canvas) {
+    this.row = row;
+    this.column = column;
 
-    this.row = null;
-    this.column = null;
-
-    this.allBricks = allBricks;
+    this.x = column * canvas.width * BRICK_WIDTH;
+    this.y = row * canvas.height * BRICK_HEIGHT;
     this.canvas = canvas;
 
     this.length = (this.canvas.width)*BRICK_WIDTH;
@@ -35,6 +33,14 @@ class Brick {
       x2: this.x + (this.length / 2),
       y2: this.y + (this.height / 2),
     }
+  }
+
+  serialize() {
+    return JSON.stringify({
+      x: this.x,
+      y: this.y,
+      color: this.color
+    })
   }
 }
 

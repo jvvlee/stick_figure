@@ -34,4 +34,8 @@ class BrickManager {
       ...this.snapshot
     }
   }
+
+  serialize() {
+    return JSON.stringify(this.allBricks);
+  }
 }

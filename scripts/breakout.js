@@ -3,9 +3,9 @@
 
 const paddle = new Paddle(canvas);
 const ball = new Ball(canvas)
-const batman = new BrickManager();
-const painter = new Painter(canvas, context, paddle, ball, batman);
-const smash = new BallCollisionDetector(paddle, ball, canvas, batman);
+const brickManager = new BrickManager();
+const painter = new Painter(canvas, context, paddle, ball, brickManager);
+const smash = new BallCollisionDetector(paddle, ball, canvas, brickManager);
 
 function loop () {
   ball.move(paddle);
@@ -25,18 +25,15 @@ canvas.addEventListener("click", event => {
   ball.launch();
 })
 
-for (var y = 1; y < batman.rows + 1; y++) {
-  for (var x = 1; x < batman.columns + 1; x++) {
-
-    const xBrick = x * canvas.width * BRICK_WIDTH;
-    const yBrick = y * canvas.height * BRICK_HEIGHT;
-
-    const brick = new Brick(xBrick, yBrick, canvas);
-
-    batman.addBrick(brick);
+for (var y = 1; y < brickManager.rows + 1; y++) {
+  for (var x = 1; x < brickManager.columns + 1; x++) {
+    if (y>x) {
+      const brick = new Brick(x, y, canvas);
+      brickManager.addBrick(brick);
+    }
   }
 }
 
-batman.takeSnapshot();
+brickManager.takeSnapshot();
 
 loop();
