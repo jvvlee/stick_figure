@@ -2,6 +2,7 @@ function readUrlParam(paramName, coerceInt, asList) {
   asList = asList || false;
   var vars = {};
   var q = document.URL.split('?')[1];
+
   if (q != undefined) {
     q = q.split('&');
     for (var i = 0; i < q.length; i++) {
@@ -12,6 +13,7 @@ function readUrlParam(paramName, coerceInt, asList) {
       vars[name].push(value);
     }
   }
+  
   if (vars.hasOwnProperty(paramName)) {
     var paramList = vars[paramName];
     if (coerceInt) {

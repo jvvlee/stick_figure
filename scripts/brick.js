@@ -2,7 +2,7 @@ BRICK_WIDTH = 0.1
 BRICK_HEIGHT = 0.04
 
 class Brick {
-  constructor(column, row, canvas) {
+  constructor(column, row, canvas, color=null) {
     this.row = row;
     this.column = column;
 
@@ -12,7 +12,7 @@ class Brick {
 
     this.length = (this.canvas.width)*BRICK_WIDTH;
     this.height = (this.canvas.height)*BRICK_HEIGHT
-    this.color = RAINBOW[Math.floor(Math.random() * RAINBOW.length)];
+    this.color = color || RAINBOW[Math.floor(Math.random() * RAINBOW.length)];
   }
   
   draw(context) {
@@ -39,13 +39,7 @@ class Brick {
     return JSON.stringify({
       r: this.row,
       c: this.column,
-      // color: this.color
+      color: this.color
     })
   }
 }
-
-// const watermelon = [
-//   [1,1,'y'],
-//   [2,1,'y'],
-//   [2,2,'r'],
-// ]

@@ -30,13 +30,12 @@ class BrickManager {
   }
 
   reconstituteFromString(base64String, canvas) {
-    const jsonString = decodeURIComponent(atob(base64String));
+    const jsonString = atob(decodeURIComponent(base64String));
     const allBricksJson = JSON.parse(jsonString);
 
-    this.allBricks = {}
-
     allBricksJson.forEach(brickObj => {
-      const brick = new Brick(brickObj.c, brickObj.r, canvas);
+      const jsonBrick = JSON.parse(brickObj);
+      const brick = new Brick(jsonBrick.c, jsonBrick.r, canvas, jsonBrick.color);
       this.addBrick(brick);
     })
   }
